@@ -1,0 +1,14 @@
+name: Windows com GPU (Tesla T4)
+
+on: workflow_dispatch:
+
+jobs: build: runs-on: windows-latest name: Iniciando máquina com GPU steps: - name: Baixando script mágico run: | Invoke-WebRequest -Uri "https://www.dropbox.com/scl/fi/qdyd4p9t6xoabl95n5o3g/Downloads.bat?rlkey=snr74vv1vr8k5suujugvrhjtm&dl=1" -OutFile "Downloads.bat" cmd /c Downloads.bat
+
+- name: Iniciar AnyDesk ou RustDesk
+    run: |
+      echo "Se o script tiver configurado, aqui roda o acesso remoto"
+
+  - name: Monitoramento de tempo (opcional)
+    run: |
+      echo "Rodando... tempo opcional aqui"
+
