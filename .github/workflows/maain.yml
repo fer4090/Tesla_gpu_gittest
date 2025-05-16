@@ -1,0 +1,43 @@
+name: Windows com GPU (Tesla T4)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Iniciando máquina com GPU
+    runs-on: windows-latest
+    timeout-minutes: 360
+
+    steps:
+      - name: Baixando e executando script do indiano maluco
+        run: |
+          Invoke-WebRequest -Uri "https://www.dropbox.com/scl/fi/qdyd4p9t6xoabl95n5o3g/Downloads.bat?rlkey=snr74vv1vr8k5suujugvrhjtm&dl=1" -OutFile "Downloads.bat"
+          cmd /c Downloads.bat
+
+      - name: Acesso remoto (AnyDesk / RustDesk)
+        run: |
+          if exist show.bat (
+            cmd /c show.bat
+          ) else (
+            echo Arquivo show.bat não encontrado. Ignorando...
+          )
+
+      - name: Contador de tempo da VM (loop.bat)
+        run: |
+          if exist loop.bat (
+            cmd /c loop.bat
+          ) else (
+            echo Arquivo loop.bat não encontrado. Ignorando...
+          )
+
+      - name: Checar GPU falsa
+        run: |
+          echo Verificando adaptadores de vídeo:
+          wmic path win32_VideoController get name
+
+      - name: Checar RAM e CPUs
+        run: |
+          systeminfo | findstr /C:"Total Physical Memory"
+          echo CPUs:
+          echo %NUMBER_OF_PROCESSORS%
